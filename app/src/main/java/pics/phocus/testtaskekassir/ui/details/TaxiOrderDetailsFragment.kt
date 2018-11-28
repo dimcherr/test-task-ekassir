@@ -12,6 +12,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 import pics.phocus.testtaskekassir.R
+import pics.phocus.testtaskekassir.images.ImageLoader
 import pics.phocus.testtaskekassir.ui.base.ScopedFragment
 
 class TaxiOrderDetailsFragment : ScopedFragment(), KodeinAware {
@@ -49,6 +50,7 @@ class TaxiOrderDetailsFragment : ScopedFragment(), KodeinAware {
             textView_price.text = order.price.amount.toString()
             textView_model_name.text = order.vehicle.modelName
             textView_reg_number.text = order.vehicle.regNumber
+            ImageLoader.with(this@TaxiOrderDetailsFragment).load("http://www.roxiemobile.ru/careers/test/images/${order.vehicle.photo}").into(imageView_photo)
         })
     }
 }
