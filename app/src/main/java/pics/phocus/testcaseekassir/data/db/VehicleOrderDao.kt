@@ -12,6 +12,6 @@ interface VehicleOrderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsert(orders: List<VehicleOrder>)
 
-    @Query("SELECT * FROM vehicle_order")
+    @Query("SELECT * FROM vehicle_order ORDER BY orderTime DESC")
     fun loadOrders(): LiveData<List<VehicleOrder>>
 }
