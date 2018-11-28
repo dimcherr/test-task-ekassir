@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.list_fragment.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -22,6 +24,12 @@ class ListFragment : ScopedFragment(), KodeinAware {
 
     private val viewModelFactory by instance<ListViewModelFactory>()
     private lateinit var viewModel: ListViewModel
+
+    private val adapter by lazy {
+        ListRecyclerViewAdapter {
+            Toast.makeText(context!!, "Click! ${it.startAddress.address}", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,14 +45,21 @@ class ListFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun bindUI() = launch {
-        val currentWeather = viewModel.vehicleOrders.await()
-        currentWeather.observe(this@ListFragment, Observer {
-            Log.d("MYTAG", it?.toString())
-            text_view.text = it?.toString() ?: ""
+        val vehicleOrders = viewModel.vehicleOrders.await()
+        vehicleOrders.observe(this@ListFragment, Observer { items ->
+            adapter.loadItems(items)
+            adapter.notifyDataSetChanged()
         })
 
         button_to_details.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_toDetails)
+        }
+
+        // setup recycler view
+        recycler_view.let {
+            it.layoutManager = LinearLayoutManager(context!!)
+            it.adapter = adapter
+            it.addItemDecoration(ListItemOffsetDecoration(context!!, R.dimen.list_spacing))
         }
     }
 }
