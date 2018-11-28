@@ -6,14 +6,14 @@
             app:startDestination="@id/listFragment">
     <fragment
             android:id="@+id/listFragment"
-            android:name="pics.phocus.testtaskekassir.ui.list.ListFragment"
+            android:name="pics.phocus.testtaskekassir.ui.list.TaxiOrderListFragment"
             android:label="List"
             tools:layout="@layout/fragment_taxiOrderList">
         <action android:id="@+id/action_toDetails" app:destination="@id/detailsFragment"/>
     </fragment>
     <fragment
             android:id="@+id/detailsFragment"
-            android:name="pics.phocus.testtaskekassir.ui.details.DetailsFragment"
+            android:name="pics.phocus.testtaskekassir.ui.details.TaxiOrderDetailsFragment"
             android:label="Details"
             tools:layout="@layout/fragment_taxiOrderDetails">
         <argument android:name="id" app:argType="integer" android:defaultValue="-1"/>

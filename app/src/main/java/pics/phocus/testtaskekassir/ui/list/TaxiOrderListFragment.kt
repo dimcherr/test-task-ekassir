@@ -16,12 +16,14 @@ import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
 import pics.phocus.testtaskekassir.R
 import pics.phocus.testtaskekassir.ui.base.ScopedFragment
+import pics.phocus.testtaskekassir.ui.list.recycler.ListItemOffsetDecoration
+import pics.phocus.testtaskekassir.ui.list.recycler.ListRecyclerViewAdapter
 
-class ListFragment : ScopedFragment(), KodeinAware {
+class TaxiOrderListFragment : ScopedFragment(), KodeinAware {
     override val kodein by closestKodein()
 
-    private val viewModelFactory by instance<ListViewModelFactory>()
-    private lateinit var viewModel: ListViewModel
+    private val viewModelFactory by instance<TaxiOrderListViewModelFactory>()
+    private lateinit var viewModel: TaxiOrderListViewModel
 
     private val adapter by lazy {
         ListRecyclerViewAdapter {
@@ -38,13 +40,13 @@ class ListFragment : ScopedFragment(), KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TaxiOrderListViewModel::class.java)
         bindUI()
     }
 
     private fun bindUI() = launch {
-        val vehicleOrders = viewModel.vehicleOrders.await()
-        vehicleOrders.observe(this@ListFragment, Observer { items ->
+        val taxiOrders = viewModel.taxiOrders.await()
+        taxiOrders.observe(this@TaxiOrderListFragment, Observer { items ->
             adapter.loadItems(items)
             adapter.notifyDataSetChanged()
         })
@@ -57,7 +59,12 @@ class ListFragment : ScopedFragment(), KodeinAware {
         recycler_view.let {
             it.layoutManager = LinearLayoutManager(context!!)
             it.adapter = adapter
-            it.addItemDecoration(ListItemOffsetDecoration(context!!, R.dimen.list_spacing))
+            it.addItemDecoration(
+                ListItemOffsetDecoration(
+                    context!!,
+                    R.dimen.list_spacing
+                )
+            )
         }
     }
 }

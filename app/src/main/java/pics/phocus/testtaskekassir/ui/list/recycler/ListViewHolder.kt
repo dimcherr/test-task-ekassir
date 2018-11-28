@@ -1,4 +1,4 @@
-package pics.phocus.testtaskekassir.ui.list
+package pics.phocus.testtaskekassir.ui.list.recycler
 
 import android.view.View
 import android.widget.TextView

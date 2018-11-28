@@ -4,21 +4,21 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import pics.phocus.testtaskekassir.data.db.model.VehicleOrder
+import pics.phocus.testtaskekassir.data.db.model.TaxiOrder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 const val BASE_URL = "https://www.roxiemobile.ru/careers/test/"
 
-interface VehicleOrderApiService {
+interface TaxiOrderApiService {
     @GET("orders.json")
-    fun getVehicleOrders(): Deferred<List<VehicleOrder>>
+    fun getTaxiOrders(): Deferred<List<TaxiOrder>>
 
     companion object {
         operator fun invoke(
             connectivityInterceptor: ConnectivityInterceptor
-        ): VehicleOrderApiService {
+        ): TaxiOrderApiService {
             val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                     .url()
@@ -43,7 +43,7 @@ interface VehicleOrderApiService {
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(VehicleOrderApiService::class.java)
+                .create(TaxiOrderApiService::class.java)
         }
     }
 }

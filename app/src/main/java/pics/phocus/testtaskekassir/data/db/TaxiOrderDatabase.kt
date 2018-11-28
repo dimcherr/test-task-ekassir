@@ -4,18 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import pics.phocus.testtaskekassir.data.db.model.VehicleOrder
+import pics.phocus.testtaskekassir.data.db.model.TaxiOrder
 
 @Database(
-    entities = [VehicleOrder::class],
+    entities = [TaxiOrder::class],
     version = 1
 )
-abstract class VehicleOrderDatabase : RoomDatabase() {
-    abstract fun vehicleOrderDao(): VehicleOrderDao
+abstract class TaxiOrderDatabase : RoomDatabase() {
+    abstract fun taxiOrderDao(): TaxiOrderDao
 
     companion object {
         @Volatile
-        private var instance: VehicleOrderDatabase? = null
+        private var instance: TaxiOrderDatabase? = null
         private var LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
@@ -23,6 +23,6 @@ abstract class VehicleOrderDatabase : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext, VehicleOrderDatabase::class.java, "vehicle_order_db").build()
+            Room.databaseBuilder(context.applicationContext, TaxiOrderDatabase::class.java, "taxi_order_db").build()
     }
 }

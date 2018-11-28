@@ -9,13 +9,13 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_taxiOrderDetails.*
 import pics.phocus.testtaskekassir.R
 
-class DetailsFragment : Fragment() {
+class TaxiOrderDetailsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = DetailsFragment()
+        fun newInstance() = TaxiOrderDetailsFragment()
     }
 
-    private lateinit var viewModel: DetailsViewModel
+    private lateinit var viewModel: TaxiOrderDetailsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +26,7 @@ class DetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(TaxiOrderDetailsViewModel::class.java)
 
         arguments.let {
             val safeArgs = DetailsFragmentArgs.fromBundle(it)

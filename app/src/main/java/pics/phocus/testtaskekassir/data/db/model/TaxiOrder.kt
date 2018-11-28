@@ -4,8 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "vehicle_order")
-data class VehicleOrder(
+@Entity(tableName = "taxi_order")
+data class TaxiOrder(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
 

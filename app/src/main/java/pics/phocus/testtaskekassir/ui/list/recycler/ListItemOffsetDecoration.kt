@@ -1,4 +1,4 @@
-package pics.phocus.testtaskekassir.ui.list
+package pics.phocus.testtaskekassir.ui.list.recycler
 
 import android.content.Context
 import android.graphics.Rect

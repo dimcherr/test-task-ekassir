@@ -1,17 +1,17 @@
-package pics.phocus.testtaskekassir.ui.list
+package pics.phocus.testtaskekassir.ui.list.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pics.phocus.testtaskekassir.R
-import pics.phocus.testtaskekassir.data.db.model.VehicleOrder
+import pics.phocus.testtaskekassir.data.db.model.TaxiOrder
 
-class ListRecyclerViewAdapter(private val onClick: (VehicleOrder) -> Unit) :
+class ListRecyclerViewAdapter(private val onClick: (TaxiOrder) -> Unit) :
     RecyclerView.Adapter<ListViewHolder>() {
 
-    private var items: List<VehicleOrder>? = null
+    private var items: List<TaxiOrder>? = null
 
-    fun loadItems(items: List<VehicleOrder>) {
+    fun loadItems(items: List<TaxiOrder>) {
         this.items = items
     }
 

@@ -5,13 +5,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import pics.phocus.testtaskekassir.data.db.model.VehicleOrder
+import pics.phocus.testtaskekassir.data.db.model.TaxiOrder
 
 @Dao
-interface VehicleOrderDao {
+interface TaxiOrderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsert(orders: List<VehicleOrder>)
+    fun upsert(orders: List<TaxiOrder>)
 
-    @Query("SELECT * FROM vehicle_order ORDER BY orderTime DESC")
-    fun loadOrders(): LiveData<List<VehicleOrder>>
+    @Query("SELECT * FROM taxi_order ORDER BY orderTime DESC")
+    fun loadOrders(): LiveData<List<TaxiOrder>>
 }
