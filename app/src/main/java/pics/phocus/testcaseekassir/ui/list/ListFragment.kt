@@ -1,4 +1,4 @@
-package pics.phocus.testcaseekassir
+package pics.phocus.testcaseekassir.ui.list
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.list_fragment.*
+import pics.phocus.testcaseekassir.R
 
 
 class ListFragment : Fragment() {

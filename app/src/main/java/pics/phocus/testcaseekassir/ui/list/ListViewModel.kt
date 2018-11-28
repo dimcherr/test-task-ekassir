@@ -1,4 +1,4 @@
-package pics.phocus.testcaseekassir
+package pics.phocus.testcaseekassir.ui.list
 
 import androidx.lifecycle.ViewModel;
 

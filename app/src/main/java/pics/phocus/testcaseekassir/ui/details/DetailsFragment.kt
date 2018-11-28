@@ -1,4 +1,4 @@
-package pics.phocus.testcaseekassir
+package pics.phocus.testcaseekassir.ui.details
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -6,7 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import pics.phocus.testcaseekassir.R
+import pics.phocus.testcaseekassir.ui.list.ListViewModel
 
 class DetailsFragment : Fragment() {
 
