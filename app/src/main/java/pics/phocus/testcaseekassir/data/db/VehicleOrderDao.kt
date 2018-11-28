@@ -10,7 +10,7 @@ import pics.phocus.testcaseekassir.data.db.model.VehicleOrder
 @Dao
 interface VehicleOrderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsert(order: VehicleOrder)
+    fun upsert(orders: List<VehicleOrder>)
 
     @Query("SELECT * FROM vehicle_order")
     fun loadOrders(): LiveData<List<VehicleOrder>>
