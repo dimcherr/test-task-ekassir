@@ -13,6 +13,7 @@ import pics.phocus.testtaskekassir.data.db.TaxiOrderDatabase
 import pics.phocus.testtaskekassir.data.network.*
 import pics.phocus.testtaskekassir.data.repository.TaxiOrderRepository
 import pics.phocus.testtaskekassir.data.repository.TaxiOrderRepositoryImpl
+import pics.phocus.testtaskekassir.ui.details.TaxiOrderDetailsViewModelFactory
 import pics.phocus.testtaskekassir.ui.list.TaxiOrderListViewModelFactory
 
 class App : Application(), KodeinAware {
@@ -26,6 +27,7 @@ class App : Application(), KodeinAware {
         bind<TaxiOrderNetworkDataSource>() with singleton { TaxiOrderNetworkDataSourceImpl(instance()) }
         bind<TaxiOrderRepository>() with singleton { TaxiOrderRepositoryImpl(instance(), instance()) }
         bind() from provider { TaxiOrderListViewModelFactory(instance()) }
+        bind() from provider { TaxiOrderDetailsViewModelFactory(instance()) }
     }
 
     override fun onCreate() {

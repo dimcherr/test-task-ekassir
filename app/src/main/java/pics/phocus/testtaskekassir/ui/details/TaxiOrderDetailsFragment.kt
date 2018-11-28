@@ -4,34 +4,51 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.fragment_taxiOrderDetails.*
+import kotlinx.android.synthetic.main.fragment__taxi_order_details.*
+import kotlinx.coroutines.launch
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.closestKodein
+import org.kodein.di.generic.instance
 import pics.phocus.testtaskekassir.R
+import pics.phocus.testtaskekassir.ui.base.ScopedFragment
 
-class TaxiOrderDetailsFragment : Fragment() {
+class TaxiOrderDetailsFragment : ScopedFragment(), KodeinAware {
+
+    override val kodein by closestKodein()
 
     companion object {
         fun newInstance() = TaxiOrderDetailsFragment()
     }
 
+    private val viewModelFactory by instance<TaxiOrderDetailsViewModelFactory>()
     private lateinit var viewModel: TaxiOrderDetailsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_taxiOrderDetails, container, false)
+        return inflater.inflate(R.layout.fragment__taxi_order_details, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(TaxiOrderDetailsViewModel::class.java)
-
-        arguments.let {
-            val safeArgs = DetailsFragmentArgs.fromBundle(it)
-            textView_driver_name.text = "${safeArgs.id}"
-        }
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(TaxiOrderDetailsViewModel::class.java)
+        val safeArgs = TaxiOrderDetailsFragmentArgs.fromBundle(arguments)
+        viewModel.id = safeArgs.id
+        bindUI()
     }
 
+    private fun bindUI() = launch {
+        val taxiOrder = viewModel.taxiOrder.await()
+        taxiOrder.observe(this@TaxiOrderDetailsFragment, Observer { order ->
+            textView_driver_name.text = order.vehicle.driverName
+            textView_start_address.text = order.startAddress.address
+            textView_end_address.text = order.endAddress.address
+            textView_price.text = order.price.amount.toString()
+            textView_model_name.text = order.vehicle.modelName
+            textView_reg_number.text = order.vehicle.regNumber
+        })
+    }
 }

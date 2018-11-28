@@ -8,14 +8,14 @@
             android:id="@+id/listFragment"
             android:name="pics.phocus.testtaskekassir.ui.list.TaxiOrderListFragment"
             android:label="List"
-            tools:layout="@layout/fragment_taxiOrderList">
+            tools:layout="@layout/fragment__taxi_order_list">
         <action android:id="@+id/action_toDetails" app:destination="@id/detailsFragment"/>
     </fragment>
     <fragment
             android:id="@+id/detailsFragment"
             android:name="pics.phocus.testtaskekassir.ui.details.TaxiOrderDetailsFragment"
             android:label="Details"
-            tools:layout="@layout/fragment_taxiOrderDetails">
+            tools:layout="@layout/fragment__taxi_order_details">
         <argument android:name="id" app:argType="integer" android:defaultValue="-1"/>
     </fragment>
 </navigation>

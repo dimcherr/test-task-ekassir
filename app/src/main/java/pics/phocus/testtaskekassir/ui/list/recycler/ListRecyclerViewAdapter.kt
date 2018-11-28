@@ -17,7 +17,7 @@ class ListRecyclerViewAdapter(private val onClick: (TaxiOrder) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.listItem_taxiOrder, parent, false)
+            .inflate(R.layout.list_item__taxi_order, parent, false)
         return ListViewHolder(view)
     }
 

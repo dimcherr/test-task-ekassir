@@ -36,6 +36,12 @@ class TaxiOrderRepositoryImpl(
         }
     }
 
+    override suspend fun getTaxiOrderById(id: Int): LiveData<out TaxiOrder> {
+        return withContext(Dispatchers.IO) {
+            return@withContext taxiOrderDao.loadOrderById(id)
+        }
+    }
+
     private suspend fun initData() {
         if (isFetchNeeded())
             fetchTaxiOrders()

@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_taxiOrderList.*
+import kotlinx.android.synthetic.main.fragment__taxi_order_list.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -27,7 +27,7 @@ class TaxiOrderListFragment : ScopedFragment(), KodeinAware {
 
     private val adapter by lazy {
         ListRecyclerViewAdapter {
-            Toast.makeText(context!!, "Click! ${it.startAddress.address}", Toast.LENGTH_SHORT).show()
+            navigateToDetails(it.id)
         }
     }
 
@@ -35,7 +35,7 @@ class TaxiOrderListFragment : ScopedFragment(), KodeinAware {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_taxiOrderList, container, false)
+        return inflater.inflate(R.layout.fragment__taxi_order_list, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -44,16 +44,18 @@ class TaxiOrderListFragment : ScopedFragment(), KodeinAware {
         bindUI()
     }
 
+    private fun navigateToDetails(id: Int) {
+        val nextAction = TaxiOrderListFragmentDirections.actionToDetails()
+        nextAction.setId(id)
+        Navigation.findNavController(recycler_view).navigate(nextAction)
+    }
+
     private fun bindUI() = launch {
         val taxiOrders = viewModel.taxiOrders.await()
         taxiOrders.observe(this@TaxiOrderListFragment, Observer { items ->
             adapter.loadItems(items)
             adapter.notifyDataSetChanged()
         })
-
-        button_to_details.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_toDetails)
-        }
 
         // setup recycler view
         recycler_view.let {

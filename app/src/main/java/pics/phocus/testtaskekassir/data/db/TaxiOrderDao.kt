@@ -14,4 +14,7 @@ interface TaxiOrderDao {
 
     @Query("SELECT * FROM taxi_order ORDER BY orderTime DESC")
     fun loadOrders(): LiveData<List<TaxiOrder>>
+
+    @Query("SELECT * FROM taxi_order WHERE id = :id ORDER BY orderTime DESC")
+    fun loadOrderById(id: Int): LiveData<TaxiOrder>
 }

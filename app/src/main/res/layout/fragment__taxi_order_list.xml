@@ -12,15 +12,6 @@
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/listItem_taxiOrder"/>
-
-    <Button android:id="@+id/button_to_details"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="To details"
-            android:layout_margin="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            tools:listitem="@layout/list_item__taxi_order"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
