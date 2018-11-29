@@ -82,7 +82,7 @@ object ImageLoader {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             }
             catch (e: IOException) {
-                Log.e("MYTAG", e.message, e)
+                cacheFile.delete()
             }
             finally {
                 outputStream?.close()
@@ -104,7 +104,7 @@ object ImageLoader {
                 .build()
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    Log.d("MYTAG", "ON FAILURE")
+                    cacheFile?.delete()
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -112,7 +112,7 @@ object ImageLoader {
                         BitmapFactory.decodeStream(it)
                     }
                     if (bitmap == null) {
-                        // report error, maybe retry
+                        cacheFile?.delete()
                     } else {
                         val scope = coroutineScope ?: GlobalScope
                         scope.launch {
