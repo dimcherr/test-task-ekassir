@@ -30,7 +30,8 @@ class ListRecyclerViewAdapter(private val onClick: (TaxiOrder) -> Unit) :
         holder.textViewEndAddress.text = item.endAddress.address
         holder.textViewStartAddress.text = item.startAddress.address
         holder.textViewPrice.text = PriceFormatter.format(item.price.amount, item.price.currency)
-        holder.textViewRideDate.text = ZonedDateTime.parse(item.orderTime).format(DateTimeFormatter.ofPattern("dd.MM.yyyy в HH:mm"))
+        holder.textViewRideDate.text =
+                ZonedDateTime.parse(item.orderTime).format(DateTimeFormatter.ofPattern("dd.MM.yyyy в HH:mm"))
         with(holder.view) {
             setOnClickListener {
                 onClick(item)

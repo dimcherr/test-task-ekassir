@@ -1,33 +1,27 @@
 package pics.phocus.testtaskekassir.images
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Log
 import android.widget.ImageView
 import androidx.preference.PreferenceManager
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.*
-import org.threeten.bp.ZonedDateTime
 import pics.phocus.testtaskekassir.internal.CacheManager
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
-import java.util.prefs.Preferences
 
 object ImageLoader {
 
+    const val IMAGE_BASE_URL = "http://www.roxiemobile.ru/careers/test/images"
     const val CACHE_MINUTES = 10
 
     fun with(coroutineScope: CoroutineScope) = Builder().with(coroutineScope)
-
-    fun load(url: String) = Builder().load(url)
 
     class Builder {
         private var url: String = ""
@@ -38,8 +32,8 @@ object ImageLoader {
             this.coroutineScope = coroutineScope
         }
 
-        fun load(url: String) = apply {
-            this.url = url
+        fun load(photoName: String) = apply {
+            this.url = "$IMAGE_BASE_URL/$photoName"
         }
 
         fun into(target: ImageView) = apply {
@@ -80,11 +74,9 @@ object ImageLoader {
             try {
                 outputStream = FileOutputStream(cacheFile)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-            }
-            catch (e: IOException) {
+            } catch (e: IOException) {
                 cacheFile.delete()
-            }
-            finally {
+            } finally {
                 outputStream?.close()
             }
         }

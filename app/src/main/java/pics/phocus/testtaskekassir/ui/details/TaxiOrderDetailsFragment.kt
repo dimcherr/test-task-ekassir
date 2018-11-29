@@ -22,10 +22,6 @@ class TaxiOrderDetailsFragment : ScopedFragment(), KodeinAware {
 
     override val kodein by closestKodein()
 
-    companion object {
-        fun newInstance() = TaxiOrderDetailsFragment()
-    }
-
     private val viewModelFactory by instance<TaxiOrderDetailsViewModelFactory>()
     private lateinit var viewModel: TaxiOrderDetailsViewModel
 
@@ -53,8 +49,10 @@ class TaxiOrderDetailsFragment : ScopedFragment(), KodeinAware {
             textView_price.text = PriceFormatter.format(order.price.amount, order.price.currency)
             textView_model_name.text = order.vehicle.modelName
             textView_reg_number.text = order.vehicle.regNumber
-            textView_ride_date.text = ZonedDateTime.parse(order.orderTime).format(DateTimeFormatter.ofPattern("dd.MM.yyyy в HH:mm"))
-            ImageLoader.with(this@TaxiOrderDetailsFragment).load("http://www.roxiemobile.ru/careers/test/images/${order.vehicle.photo}").into(imageView_photo)
+            textView_ride_date.text =
+                    ZonedDateTime.parse(order.orderTime).format(DateTimeFormatter.ofPattern("dd.MM.yyyy в HH:mm"))
+            ImageLoader.with(this@TaxiOrderDetailsFragment)
+                .load(order.vehicle.photo).into(imageView_photo)
         })
     }
 }

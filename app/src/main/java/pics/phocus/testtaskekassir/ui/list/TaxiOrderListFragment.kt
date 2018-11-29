@@ -1,11 +1,9 @@
 package pics.phocus.testtaskekassir.ui.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -63,7 +61,8 @@ class TaxiOrderListFragment : ScopedFragment(), KodeinAware {
         }
 
         viewModel.setOnNetworkFailureListener {
-            Snackbar.make(recycler_view, resources.getString(R.string.network_failure_message), Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(recycler_view, resources.getString(R.string.network_failure_message), Snackbar.LENGTH_SHORT)
+                .show()
         }
 
         initTaxiOrders()

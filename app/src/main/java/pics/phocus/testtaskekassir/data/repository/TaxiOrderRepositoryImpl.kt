@@ -5,7 +5,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.threeten.bp.ZonedDateTime
 import pics.phocus.testtaskekassir.data.db.TaxiOrderDao
 import pics.phocus.testtaskekassir.data.db.model.TaxiOrder
 import pics.phocus.testtaskekassir.data.network.TaxiOrderNetworkDataSource
@@ -31,8 +30,7 @@ class TaxiOrderRepositoryImpl(
         return withContext(Dispatchers.IO) {
             try {
                 fetchTaxiOrders()
-            }
-            catch (e: NoConnectivityException) {
+            } catch (e: NoConnectivityException) {
                 onNetworkFailure()
             }
             return@withContext taxiOrderDao.loadOrders()

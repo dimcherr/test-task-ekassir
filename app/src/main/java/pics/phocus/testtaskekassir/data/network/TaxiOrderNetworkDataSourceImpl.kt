@@ -1,6 +1,5 @@
 package pics.phocus.testtaskekassir.data.network
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import pics.phocus.testtaskekassir.data.db.model.TaxiOrder

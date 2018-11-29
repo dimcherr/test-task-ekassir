@@ -3,8 +3,8 @@ package pics.phocus.testtaskekassir.ui.list.recycler
 import android.content.Context
 import android.graphics.Rect
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
 import androidx.annotation.DimenRes
+import androidx.recyclerview.widget.RecyclerView
 
 class ListItemOffsetDecoration(private val itemOffset: Int) : RecyclerView.ItemDecoration() {
 

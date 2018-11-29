@@ -9,7 +9,8 @@
             android:name="pics.phocus.testtaskekassir.ui.list.TaxiOrderListFragment"
             android:label="@string/order_list"
             tools:layout="@layout/fragment__taxi_order_list">
-        <action android:id="@+id/action_toDetails" app:destination="@id/detailsFragment"/>
+        <action android:id="@+id/action_toDetails" app:destination="@id/detailsFragment"
+                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"/>
     </fragment>
     <fragment
             android:id="@+id/detailsFragment"
