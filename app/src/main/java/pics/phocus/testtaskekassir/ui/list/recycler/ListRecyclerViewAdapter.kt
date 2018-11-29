@@ -3,8 +3,11 @@ package pics.phocus.testtaskekassir.ui.list.recycler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import pics.phocus.testtaskekassir.R
 import pics.phocus.testtaskekassir.data.db.model.TaxiOrder
+import pics.phocus.testtaskekassir.internal.PriceFormatter
 
 class ListRecyclerViewAdapter(private val onClick: (TaxiOrder) -> Unit) :
     RecyclerView.Adapter<ListViewHolder>() {
@@ -26,8 +29,8 @@ class ListRecyclerViewAdapter(private val onClick: (TaxiOrder) -> Unit) :
         val item = items[position]
         holder.textViewEndAddress.text = item.endAddress.address
         holder.textViewStartAddress.text = item.startAddress.address
-        holder.textViewPrice.text = item.price.amount.toString()
-        holder.textViewRideDate.text = item.orderTime
+        holder.textViewPrice.text = PriceFormatter.format(item.price.amount, item.price.currency)
+        holder.textViewRideDate.text = ZonedDateTime.parse(item.orderTime).format(DateTimeFormatter.ofPattern("dd.MM.yyyy в HH:mm"))
         with(holder.view) {
             setOnClickListener {
                 onClick(item)

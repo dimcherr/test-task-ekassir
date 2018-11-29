@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">Test Task Ekassir</string>
+    <string name="app_name">Такси</string>
+
+    <string name="order_list">Список заказов</string>
+    <string name="order_details">Детали заказа</string>
+
+    <!--dummies-->
+    <string name="dummy_vehicle_reg_number">х555мт98</string>
+    <string name="dummy_vehicle_model_name">Nissan Almera</string>
+    <string name="dummy_vehicle_driver_name">Иванов Иван Иваныч</string>
+    <string name="dummy_price">\u20BD 558.50</string>
+    <string name="dummy_ride_date">17.11.2018 в 14:53</string>
+    <string name="dummy_end_address">Пр. Стачек, д.50</string>
+    <string name="dummy_start_address">Ул. Зайцева, д.45</string>
+    <string name="dummy_vehicle_photo_content_description">Фото машины</string>
 </resources>
