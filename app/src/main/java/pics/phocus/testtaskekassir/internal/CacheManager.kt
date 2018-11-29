@@ -8,6 +8,9 @@ object CacheManager {
             if (System.currentTimeMillis() - file.lastModified() > minutes * 60 * 1000) {
                 file.delete()
             }
+            if (file.length() < 1) {
+                file.delete()
+            }
         }
     }
 }
