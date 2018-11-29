@@ -9,15 +9,12 @@ import org.threeten.bp.ZonedDateTime
 import pics.phocus.testtaskekassir.data.db.TaxiOrderDao
 import pics.phocus.testtaskekassir.data.db.model.TaxiOrder
 import pics.phocus.testtaskekassir.data.network.TaxiOrderNetworkDataSource
+import pics.phocus.testtaskekassir.internal.NoConnectivityException
 
 class TaxiOrderRepositoryImpl(
     private val taxiOrderDao: TaxiOrderDao,
     private val networkDataSource: TaxiOrderNetworkDataSource
 ) : TaxiOrderRepository {
-
-    // TODO handle caching
-    var lastFetchTime: ZonedDateTime = ZonedDateTime.now().minusHours(2)
-
     init {
         networkDataSource.downloadedTaxiOrders.observeForever { newTaxiOrders ->
             persistFetchedTaxiOrders(newTaxiOrders)
@@ -30,9 +27,14 @@ class TaxiOrderRepositoryImpl(
         }
     }
 
-    override suspend fun getTaxiOrders(): LiveData<out List<TaxiOrder>> {
+    override suspend fun getTaxiOrders(onNetworkFailure: () -> Unit): LiveData<out List<TaxiOrder>> {
         return withContext(Dispatchers.IO) {
-            initData()
+            try {
+                fetchTaxiOrders()
+            }
+            catch (e: NoConnectivityException) {
+                onNetworkFailure()
+            }
             return@withContext taxiOrderDao.loadOrders()
         }
     }
@@ -43,20 +45,8 @@ class TaxiOrderRepositoryImpl(
         }
     }
 
-    private suspend fun initData() {
-        if (isFetchNeeded())
-            fetchTaxiOrders()
-    }
-
+    @Throws(NoConnectivityException::class)
     private suspend fun fetchTaxiOrders() {
         networkDataSource.fetchTaxiOrders()
-    }
-
-    private fun isFetchNeeded(): Boolean {
-        return lastFetchTime.isBefore(ZonedDateTime.now().minusMinutes(CACHE_MINUTES))
-    }
-
-    companion object {
-        const val CACHE_MINUTES = 10L
     }
 }

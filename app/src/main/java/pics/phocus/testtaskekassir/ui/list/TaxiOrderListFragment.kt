@@ -1,6 +1,7 @@
 package pics.phocus.testtaskekassir.ui.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment__taxi_order_list.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -51,11 +55,18 @@ class TaxiOrderListFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun bindUI() = launch {
-        val taxiOrders = viewModel.taxiOrders.await()
-        taxiOrders.observe(this@TaxiOrderListFragment, Observer { items ->
-            adapter.loadItems(items)
-            adapter.notifyDataSetChanged()
-        })
+        refresh_layout.setOnRefreshListener {
+            GlobalScope.launch(Dispatchers.Main) {
+                initTaxiOrders()
+                refresh_layout.isRefreshing = false
+            }
+        }
+
+        viewModel.setOnNetworkFailureListener {
+            Snackbar.make(recycler_view, resources.getString(R.string.network_failure_message), Snackbar.LENGTH_SHORT).show()
+        }
+
+        initTaxiOrders()
 
         // setup recycler view
         recycler_view.let {
@@ -68,5 +79,13 @@ class TaxiOrderListFragment : ScopedFragment(), KodeinAware {
                 )
             )
         }
+    }
+
+    private suspend fun initTaxiOrders() {
+        val taxiOrders = viewModel.getTaxiOrders().await()
+        taxiOrders.observe(this@TaxiOrderListFragment, Observer { items ->
+            adapter.loadItems(items)
+            adapter.notifyDataSetChanged()
+        })
     }
 }

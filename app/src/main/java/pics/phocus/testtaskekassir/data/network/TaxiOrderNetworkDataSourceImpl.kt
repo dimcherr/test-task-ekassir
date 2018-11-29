@@ -15,12 +15,9 @@ class TaxiOrderNetworkDataSourceImpl(
     override val downloadedTaxiOrders: LiveData<List<TaxiOrder>>
         get() = mDownloadedTaxiOrders
 
+    @Throws(NoConnectivityException::class)
     override suspend fun fetchTaxiOrders() {
-        try {
-            val fetchedTaxiOrders = apiService.getTaxiOrders().await()
-            mDownloadedTaxiOrders.postValue(fetchedTaxiOrders)
-        } catch (e: NoConnectivityException) {
-            Log.e("Connectivity", "No internet connection", e)
-        }
+        val fetchedTaxiOrders = apiService.getTaxiOrders().await()
+        mDownloadedTaxiOrders.postValue(fetchedTaxiOrders)
     }
 }

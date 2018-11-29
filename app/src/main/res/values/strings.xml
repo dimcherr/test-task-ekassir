@@ -4,6 +4,11 @@
     <string name="order_list">Список заказов</string>
     <string name="order_details">Детали заказа</string>
 
+    <string name="menu_refresh">Обновить</string>
+
+    <!--messages-->
+    <string name="network_failure_message">Проверьте интернет соединение</string>
+
     <!--dummies-->
     <string name="dummy_vehicle_reg_number">х555мт98</string>
     <string name="dummy_vehicle_model_name">Nissan Almera</string>
