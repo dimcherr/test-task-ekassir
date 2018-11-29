@@ -41,7 +41,7 @@ class TaxiOrderDetailsFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun bindUI() = launch {
-        val taxiOrder = viewModel.taxiOrder.await()
+        val taxiOrder = viewModel.getTaxiOrder().await()
         taxiOrder.observe(this@TaxiOrderDetailsFragment, Observer { order ->
             textView_driver_name.text = order.vehicle.driverName
             textView_start_address.text = order.startAddress.address

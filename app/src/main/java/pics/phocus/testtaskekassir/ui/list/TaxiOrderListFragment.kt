@@ -55,7 +55,7 @@ class TaxiOrderListFragment : ScopedFragment(), KodeinAware {
     private fun bindUI() = launch {
         refresh_layout.setOnRefreshListener {
             GlobalScope.launch(Dispatchers.Main) {
-                initTaxiOrders()
+                viewModel.refreshTaxiOrders()
                 refresh_layout.isRefreshing = false
             }
         }
@@ -64,8 +64,11 @@ class TaxiOrderListFragment : ScopedFragment(), KodeinAware {
             Snackbar.make(recycler_view, resources.getString(R.string.network_failure_message), Snackbar.LENGTH_SHORT)
                 .show()
         }
-
-        initTaxiOrders()
+        viewModel.refreshTaxiOrders()
+        viewModel.getTaxiOrders().observe(this@TaxiOrderListFragment, Observer {items ->
+            adapter.loadItems(items)
+            adapter.notifyDataSetChanged()
+        })
 
         // setup recycler view
         recycler_view.let {
@@ -78,13 +81,5 @@ class TaxiOrderListFragment : ScopedFragment(), KodeinAware {
                 )
             )
         }
-    }
-
-    private suspend fun initTaxiOrders() {
-        val taxiOrders = viewModel.getTaxiOrders().await()
-        taxiOrders.observe(this@TaxiOrderListFragment, Observer { items ->
-            adapter.loadItems(items)
-            adapter.notifyDataSetChanged()
-        })
     }
 }

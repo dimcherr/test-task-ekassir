@@ -1,6 +1,5 @@
 package pics.phocus.testtaskekassir.data.repository
 
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -14,11 +13,6 @@ class TaxiOrderRepositoryImpl(
     private val taxiOrderDao: TaxiOrderDao,
     private val networkDataSource: TaxiOrderNetworkDataSource
 ) : TaxiOrderRepository {
-    init {
-        networkDataSource.downloadedTaxiOrders.observeForever { newTaxiOrders ->
-            persistFetchedTaxiOrders(newTaxiOrders)
-        }
-    }
 
     private fun persistFetchedTaxiOrders(fetchedTaxiOrders: List<TaxiOrder>) {
         GlobalScope.launch(Dispatchers.IO) {
@@ -26,7 +20,7 @@ class TaxiOrderRepositoryImpl(
         }
     }
 
-    override suspend fun getTaxiOrders(onNetworkFailure: () -> Unit): LiveData<out List<TaxiOrder>> {
+    override suspend fun getTaxiOrders(onNetworkFailure: () -> Unit): List<TaxiOrder> {
         return withContext(Dispatchers.IO) {
             try {
                 fetchTaxiOrders()
@@ -37,7 +31,7 @@ class TaxiOrderRepositoryImpl(
         }
     }
 
-    override suspend fun getTaxiOrderById(id: Int): LiveData<out TaxiOrder> {
+    override suspend fun getTaxiOrderById(id: Int): TaxiOrder {
         return withContext(Dispatchers.IO) {
             return@withContext taxiOrderDao.loadOrderById(id)
         }
@@ -45,6 +39,7 @@ class TaxiOrderRepositoryImpl(
 
     @Throws(NoConnectivityException::class)
     private suspend fun fetchTaxiOrders() {
-        networkDataSource.fetchTaxiOrders()
+        val taxiOrders = networkDataSource.fetchTaxiOrders()
+        persistFetchedTaxiOrders(taxiOrders)
     }
 }
