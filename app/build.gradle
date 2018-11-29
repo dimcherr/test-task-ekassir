@@ -73,10 +73,6 @@ dependencies {
     implementation 'org.kodein.di:kodein-di-generic-jvm:5.2.0'
     implementation 'org.kodein.di:kodein-di-framework-android-x:5.2.0'
 
-    // Groupie recyclerview
-    implementation "com.xwray:groupie:2.3.0"
-    implementation "com.xwray:groupie-kotlin-android-extensions:2.3.0"
-
     // new material design
     implementation "com.google.android.material:material:1.0.0"
 
